@@ -96,7 +96,6 @@ object Lab03 {
       case 1 => Some(xs.last)
       case _ => Some(xs(xs.size - 2)) // Return 2nd last element
     }
-
   }
     
     
@@ -115,7 +114,6 @@ object Lab03 {
     }
 
     compress_Rec(xs, Nil).reverse
-
   }
     
    def removeDupl [A] (xs: List[A]) : List [A] = {
@@ -127,7 +125,6 @@ object Lab03 {
        */
 
       xs.distinct
-      
     }
    
    def findFirst[A] (fx: A => Boolean, xs:List[A]): Option [A] = {
@@ -145,7 +142,6 @@ object Lab03 {
      }
 
      findFirst_Rec(fx, xs)
-
    }
    
    def findLast[A] (fx: A => Boolean, xs:List[A]): Option [A] = {
@@ -158,7 +154,6 @@ object Lab03 {
       */
 
      findFirst(fx, xs.reverse)
-     
    }
    
    def genPairs (num:Int):List [(Int, Int)] = {
@@ -363,6 +358,7 @@ object Lab03 {
       * 		perfectTree (2) ==> Node(1,Leaf(1),Leaf(1))
       * 
       */
+
      def perfectTree_Rec(num_Rec: Int): Tree[Int] = num_Rec match {
        case 1 => Leaf(1)
        case x => Node(1, perfectTree_Rec(x - 1), perfectTree_Rec(x - 1))
