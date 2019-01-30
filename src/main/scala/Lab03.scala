@@ -73,7 +73,10 @@ object Lab03 {
     println ("16): " + prod (List(1,2), List('a','b','c'))) // List((1,a), (1,b), (1,c), (2,a), (2,b), (2,c))
     println ("17): " + prefixRT    ( rt2))  // List(1, 2, 3, 4, 5)
     println ("18): " + prefixRTHO  ( rt2))  // List(1, 2, 3, 4, 5)
-    println ("19): " + postfixRTHO ( rt2))  // List(2, 4, 3, 5, 1) 
+    println ("19): " + postfixRTHO ( rt2))  // List(2, 4, 3, 5, 1)
+
+    println(rt2)
+    println("Expected: 1(2,3(4),5)")
     println ("20): " + string_of_RT( rt2))  // 1(2,3(4),5)
   }
   
@@ -94,7 +97,7 @@ object Lab03 {
     listSize match {
       case 0 => None
       case 1 => Some(xs.last)
-      case _ => Some(xs(xs.size - 2)) // Return 2nd last element
+      case _ => Some(xs(listSize - 2)) // Return 2nd last element
     }
   }
     
@@ -114,6 +117,16 @@ object Lab03 {
     }
 
     compress_Rec(xs, Nil).reverse
+
+    /*
+    xs.foldRight(List[A]()) ((x: A, res: List[A]) =>
+      res match {
+        case List() => List(x)
+        case y :: ys if x == y => res
+        case _ => x :: res
+      }
+    )
+    */
   }
     
    def removeDupl [A] (xs: List[A]) : List [A] = {
@@ -413,7 +426,11 @@ object Lab03 {
       * you in this method.
       */
 
-     List()
+     xs match {
+       case NodeR(value, list) => List(value) ::: list.foldRight(List[A]())((ys: roseTree[A], y: List[A]) =>
+         prefixRTHO(ys) ::: y
+       )
+     }
    }
    def postfixRTHO [A] (xs :roseTree[A] ) : List[A] = {
      /* # 19
@@ -421,20 +438,30 @@ object Lab03 {
       * Use higher-order function 'foldRight' to help
       * you in this method.
       */
-     List()
+
+     xs match {
+       case NodeR(value, list) => list.foldRight(List[A]())((ys: roseTree[A], y: List[A]) =>
+         postfixRTHO(ys) ::: y
+       ) ::: List(value)
+     }
    
    }
    
-   def string_of_RT[A] ( xs :roseTree[A] ) : String =  {
+   def string_of_RT[A] ( xs :roseTree[A] ) : String = {
      /* # 20
       * Write a function which generates such a string representation
       * for rose tree.
       * which prints a list of items separated by comma. 
       */
-     "Empty"
-     
+
+     def printRT(list: List[Lab03.roseTree[A]]): String = {
+       ""
+     }
+
+     xs match {
+       case NodeR(value, list) => value.toString + printRT(list)
+
+     }
    }
-  
-   
 }
 
