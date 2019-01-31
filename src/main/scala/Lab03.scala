@@ -74,9 +74,6 @@ object Lab03 {
     println ("17): " + prefixRT    ( rt2))  // List(1, 2, 3, 4, 5)
     println ("18): " + prefixRTHO  ( rt2))  // List(1, 2, 3, 4, 5)
     println ("19): " + postfixRTHO ( rt2))  // List(2, 4, 3, 5, 1)
-
-    println(rt2)
-    println("Expected: 1(2,3(4),5)")
     println ("20): " + string_of_RT( rt2))  // 1(2,3(4),5)
   }
   
@@ -455,12 +452,14 @@ object Lab03 {
       */
 
      def printRT(list: List[Lab03.roseTree[A]]): String = {
-       ""
+       list match {
+         case x :: ys => "(" + ys.foldLeft(string_of_RT(x))((c,d) => c + "," + string_of_RT(d))  + ")"
+         case _ => ""
+       }
      }
 
      xs match {
        case NodeR(value, list) => value.toString + printRT(list)
-
      }
    }
 }
